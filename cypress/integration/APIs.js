@@ -11,28 +11,28 @@ describe("More on APIs", ()=>{
                 'Authorization': 'Bearer ' +accessToken // for APIs that need authorizations
                },
             body:{
-                
-                "name":"female",
-                "email":"Aminat",
-                 "status":"23"
-
-           },
-        
-            
+                "name": "Fatai Ibrahim",
+               "email": "profftai@gmail.com",
+               "gender": "male",
+               "status": "active"
+                }
         }).then((response)=>{
-            let Created_id=response.body.id
+           
             expect(response.status).to.be.eq(200)
-            return Created_id
-        })
-    }).then((Created_id)=>{
+            expect(response.body.data).has.property('email', 'proffatai@gmail.com')
+            if(expect(response.body.data).to.have.property('id')){
+                let Created_id=response.body.data.id
+                return Created_id
+            }    
+        }).then((Created_id)=>{
         cy.request({
             method:'PUT',
             url:"https://gorest.co.in/public/v2/users/"+Created_id,
             body:{
-                
-                "name":"male",
-                "email":"Aminatu",
-                 "status":123
+                "name": "Fatai Ibrahim",
+               "email": "proffatai@gmail.com",
+               "gender": "male",
+               "status": "inactive"
            },
         }).then((response2)=>{
             expect(response2.body).to.have.property('id')
@@ -40,4 +40,5 @@ describe("More on APIs", ()=>{
         }
         )
     })
+})
 })
